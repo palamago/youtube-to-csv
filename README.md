@@ -6,9 +6,9 @@ A free, in-browser, YouTube API exporter to CSV
 
 Created to #FSOC de Buenos Aires, Argentina. 
 
-Idea: [@ginocingolani](https://twitter.com/ginocingolani)<a href="">@ginocingolani</a>. 
+Idea: [@ginocingolani](https://twitter.com/ginocingolani) - [@ailensalamone](https://twitter.com/ailensalamone) - [@martinrked](https://twitter.com/martinrked)
 
-Development: [@palamago](https://twitter.com/palamago)<a href="">@palamago</a>.
+Development: [@palamago](https://twitter.com/palamago)
 
 Bugs & improvement & ideas: [here](https://github.com/palamago/youtube-to-csv/issues)
 
