@@ -1,3 +1,21 @@
+## YouTube API exporter to CSV
+
+A free, in-browser, YouTube API exporter to CSV
+
+[Live Demo](http://palamago.github.io/youtube-to-csv/).
+
+Created to #FSOC de Buenos Aires, Argentina. 
+
+Idea: [@ginocingolani](https://twitter.com/ginocingolani)<a href="">@ginocingolani</a>. 
+
+Development: [@palamago](https://twitter.com/palamago)<a href="">@palamago</a>.
+
+Bugs & improvement & ideas: [here](https://github.com/palamago/youtube-to-csv/issues)
+
+------------------------------------------------------
+
+# FORKED FROM GREAT PROJECT:
+
 ## JSON to CSV Converter
 
 A simple JSON to CSV converter that handles objects and nested documents.
