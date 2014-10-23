@@ -146,7 +146,7 @@
     if (!input) return false;
     if (input == lastSaved) return false;
 
-    _gaq.push(['_trackEvent', 'button', 'csv']);
+    _gaq.push(['_trackEvent', 'button', 'save']);
 
     // save a permalink to an anonymous gist
     var gist = {
