@@ -13,7 +13,7 @@ var YT2CSV;
             _gaq.push(['_trackEvent', 'button', 'dale']);
             $('#loader').show();
             $('.csv,.json').hide();
-            $.getJSON($('#url').val()+'&fields=@gd:fields,entry(@gd:fields,published,updated, category(@label), title, content, link(@href),author, gd:comments/gd:feedLink(@countHint), media:group/media:content(@duration), media:group/media:thumbnail, gd:rating(@min), gd:rating(@numRaters), yt:statistics(@favoriteCount), yt:statistics(@viewCount))&callback=?',
+            $.getJSON($('#url').val()+'&fields=@gd:fields,entry(@gd:fields,published,updated, category(@label), title, content, link(@href),author, gd:comments/gd:feedLink(@countHint), media:group/media:content(@duration), media:group/media:thumbnail, gd:rating(@min), gd:rating(@max), gd:rating(@average), gd:rating(@numRaters), yt:statistics(@favoriteCount), yt:statistics(@viewCount))&callback=?',
                 function(data){
 	    			if(data && data.feed && data.feed.entry) {
 		    			YT2CSV.entries = data.feed.entry;
