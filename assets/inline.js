@@ -3,6 +3,7 @@
   var url;
   var lastSaved;
 
+
   // function log(msg) {
   //   return $(".console").removeClass("error").html(msg);
   // }
@@ -11,6 +12,7 @@
   //   return log(msg).addClass("error");
   // }
 
+  
   function doJSON() {
     // just in case
     $(".drop").hide();
@@ -76,7 +78,46 @@
 
   // takes an array of flat JSON objects, converts them to arrays
   // renders them into a small table as an example
+  
+
   function renderCSV(objects) {
+    
+    function harcodedReplace(field){
+    
+    return field.replace("published/$t","Publicado")
+    .replace("updated/$t","Actualizado")
+    .replace("category/1/label","Categoria")
+    .replace("title/$t","Título")
+    .replace("content/$t","Descripción")
+    .replace("link/1/href","URL")
+    .replace("author/0/name/$t","Autor")
+    .replace("author/0/uri/$t","Autor URL")
+    .replace("gd$comments/gd$feedLink/countHint","Cantidad de comentarios")
+    .replace("media$group/media$content/0/duration","Duración (en segundos)")
+    .replace("media$group/media$thumbnail/0/url","Miniatura 1")
+    .replace("media$group/media$thumbnail/1/url","Miniatura 2")
+    .replace("media$group/media$thumbnail/2/url","Miniatura 3")
+    .replace("media$group/media$thumbnail/3/url","Miniatura 4")
+    .replace("media$group/media$thumbnail/0/height","Alto Miniatura 1")
+    .replace("media$group/media$thumbnail/1/height","Alto Miniatura 2")
+    .replace("media$group/media$thumbnail/2/height","Alto Miniatura 3")
+    .replace("media$group/media$thumbnail/3/height","Alto Miniatura 4")
+    .replace("media$group/media$thumbnail/0/width","Ancho Miniatura 1")
+    .replace("media$group/media$thumbnail/1/width","Ancho Miniatura 2")
+    .replace("media$group/media$thumbnail/2/width","Ancho Miniatura 3")
+    .replace("media$group/media$thumbnail/3/width","Ancho Miniatura 4")
+    .replace("media$group/media$thumbnail/0/time","Tiempo Miniatura 1")
+    .replace("media$group/media$thumbnail/1/time","Tiempo Miniatura 2")
+    .replace("media$group/media$thumbnail/2/time","Tiempo Miniatura 3")
+    .replace("media$group/media$thumbnail/3/time","Tiempo Miniatura 4")
+    .replace("gd$rating/average","Rating (promedio)")
+    .replace("gd$rating/max","Rating (máx)")
+    .replace("gd$rating/min","Rating (min)")
+    .replace("gd$rating/numRaters","Cantidad de votantes")
+    .replace("yt$statistics/favoriteCount","Cantidad de Favoritos")
+    .replace("yt$statistics/viewCount","Cantidad de Vistas");
+  }
+  
     var rows = $.csv.fromObjects(objects, {justArrays: true});
     if (rows.length < 1) return;
 
@@ -90,7 +131,7 @@
     var header = rows[0];
     for (field in header) {
       var th = document.createElement("th");
-      $(th).html(header[field])
+      $(th).html(harcodedReplace(header[field]))
       tr.appendChild(th);
     }
     thead.appendChild(tr);
@@ -114,6 +155,7 @@
   }
 
   function doCSV(json) {
+
     // 1) find the primary array to iterate over
     // 2) for each item in that array, recursively flatten it into a tabular object
     // 3) turn that tabular object into a CSV row using jquery-csv
@@ -136,7 +178,38 @@
     // download link to entire CSV as data
     // thanks to http://jsfiddle.net/terryyounghk/KPEGU/
     // and http://stackoverflow.com/questions/14964035/how-to-export-javascript-array-info-to-csv-on-client-side
-    var uri = "data:text/csv;charset=utf-8," + encodeURIComponent(csv);
+    var uri = "data:text/csv;charset=utf-8," + encodeURIComponent(csv.replace("published/$t","Publicado")
+    .replace("updated/$t","Actualizado")
+    .replace("category/1/label","Categoria")
+    .replace("title/$t","Título")
+    .replace("content/$t","Descripción")
+    .replace("link/1/href","URL")
+    .replace("author/0/name/$t","Autor")
+    .replace("author/0/uri/$t","Autor URL")
+    .replace("gd$comments/gd$feedLink/countHint","Cantidad de comentarios")
+    .replace("media$group/media$content/0/duration","Duración (en segundos)")
+    .replace("media$group/media$thumbnail/0/url","Miniatura 1")
+    .replace("media$group/media$thumbnail/1/url","Miniatura 2")
+    .replace("media$group/media$thumbnail/2/url","Miniatura 3")
+    .replace("media$group/media$thumbnail/3/url","Miniatura 4")
+    .replace("media$group/media$thumbnail/0/height","Alto Miniatura 1")
+    .replace("media$group/media$thumbnail/1/height","Alto Miniatura 2")
+    .replace("media$group/media$thumbnail/2/height","Alto Miniatura 3")
+    .replace("media$group/media$thumbnail/3/height","Alto Miniatura 4")
+    .replace("media$group/media$thumbnail/0/width","Ancho Miniatura 1")
+    .replace("media$group/media$thumbnail/1/width","Ancho Miniatura 2")
+    .replace("media$group/media$thumbnail/2/width","Ancho Miniatura 3")
+    .replace("media$group/media$thumbnail/3/width","Ancho Miniatura 4")
+    .replace("media$group/media$thumbnail/0/time","Tiempo Miniatura 1")
+    .replace("media$group/media$thumbnail/1/time","Tiempo Miniatura 2")
+    .replace("media$group/media$thumbnail/2/time","Tiempo Miniatura 3")
+    .replace("media$group/media$thumbnail/3/time","Tiempo Miniatura 4")
+    .replace("gd$rating/average","Rating (promedio)")
+    .replace("gd$rating/max","Rating (máx)")
+    .replace("gd$rating/min","Rating (min)")
+    .replace("gd$rating/numRaters","Cantidad de votantes")
+    .replace("yt$statistics/favoriteCount","Cantidad de Favoritos")
+    .replace("yt$statistics/viewCount","Cantidad de Vistas"));
     $(".csv a.download").attr("href", uri);
   }
 
