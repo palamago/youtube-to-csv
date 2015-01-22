@@ -36,17 +36,49 @@
 
   <div class="container">
 
+
     <div class="row">
-      <div class="col-md-12">
-        <h2>1. Generá una URL de búsqueda en <a href="http://gdata.youtube.com/demo/" target="blank">Youtube API explorer</a>. Pegala en el campo de texto y luego [Dale!]</h2>
-        <p>Ejemplo: http://gdata.youtube.com/feeds/api/videos?alt=json&q=guacha%20piola</p>
-        <div class="input-group">
-          <input id="url" type="text" class="form-control input-lg" value="">
-          <span class="input-group-btn">
-            <button id="send" class="btn btn-default btn-lg btn-success" type="button">Dale!</button>
-          </span>
-        </div><!-- /input-group -->
-      </div>
+        <div class="col-md-12">
+          <div class="alert alert-danger" role="alert">Note: The YouTube Data API (v2) has been officially deprecated as of March 4, 2014. Same thing about this tool. :(</div>
+          <h2>1. Completá los filtros y luego [Dale!]</h2>
+          <form id="filters" class="form-horizontal">
+          <fieldset>
+
+          <!-- Form Name -->
+          <legend>Filtro de búsqueda</legend>
+
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="textinput">Texto a buscar</label>  
+            <div class="col-md-4">
+            <input id="q" name="q" type="text" placeholder="placeholder" class="form-control input-lg">
+            <span class="help-block">Será el texto que se buscará</span>  
+            </div>
+          </div>
+
+
+          <!-- Select Basic -->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="license">License</label>
+            <div class="col-md-4">
+              <select id="license" name="license" class="form-control">
+                <option value="">No especificada</option>
+                <option value="cc">Creative Commons</option>
+                <option value="youtube">Standard de Youtube</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="singlebutton"></label>
+            <div class="col-md-4">
+              <button id="send" class="btn btn-default btn-lg btn-success" type="button">Dale!</button>
+            </div>
+          </div>
+
+          </fieldset>
+          </form>
+        </div>
     </div>
 
    <div class="row">
@@ -109,7 +141,7 @@
             </span>
 
             <span class="editing">
-              Your JSON will appear below as a table.
+              Las modificaciones aparecerán en la tabla luego.
             </span>
           </p>
 
