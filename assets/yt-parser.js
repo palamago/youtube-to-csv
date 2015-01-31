@@ -8,13 +8,19 @@ var YT2CSV;
 
     YT2CSV.entries = [];
 
-    YT2CSV.endpoint = "http://gdata.youtube.com/feeds/api/videos?alt=json";
+    YT2CSV.endpoint = "http://gdata.youtube.com/feeds/api/videos?alt=json-in-script";
 
-    YT2CSV.extraParams = '&v=2&fields=@gd:fields,entry(@gd:fields,published,updated, category(@label), title, content, link(@href),author, gd:comments/gd:feedLink(@countHint), media:group/media:content(@duration), media:group/media:thumbnail, gd:rating(@min), gd:rating(@max), gd:rating(@average), gd:rating(@numRaters), yt:statistics(@favoriteCount), yt:statistics(@viewCount))&callback=?';
+    YT2CSV.extraParams = '&strict=false&v=2&fields=@gd:fields,entry(@gd:fields,published,updated, category(@label), title, content, link(@href),author, gd:comments/gd:feedLink(@countHint), media:group/media:content(@duration), media:group/media:thumbnail, gd:rating(@min), gd:rating(@max), gd:rating(@average), gd:rating(@numRaters), yt:statistics(@favoriteCount), yt:statistics(@viewCount))&callback=?';
 
     YT2CSV.init = function () {
     	$('#send').on('click',function(){
+            if($("#q").val()==''){
+                alert('Complete el texto que desea buscar');
+                return;
+            }
+
             _gaq.push(['_trackEvent', 'button', 'dale']);
+
             
             $('#loader').show();
             $('.csv,.json').hide();
@@ -38,9 +44,11 @@ var YT2CSV;
         start = (start)?start:1;
         per_page = (per_page)?per_page:50;
 
-        var query = YT2CSV.endpoint+'&'+$("#filters input[value!=''], #filters select:has(option[value!='']:selected)").serialize()+YT2CSV.extraParams+'&max-results='+per_page+'&start-index='+start;
+        var query = YT2CSV.endpoint+'&'+$("#filters input[value!=''], #filters select:has(option[value!='']:selected)").serialize()+'&max-results='+per_page+'&start-index='+start+YT2CSV.extraParams;
 
         $('#current-record').html(YT2CSV.entries.length);
+
+        console.log(query);
 
         $.getJSON(query,
             function(data){
@@ -53,7 +61,7 @@ var YT2CSV;
                         YT2CSV.call(requested,start+per_page,per_page);
                     }
                 }
-            });
+            }).error(function(error) { console.log(error); YT2CSV.parse(); });
     };
 
 	YT2CSV.parse = function () {

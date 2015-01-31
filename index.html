@@ -64,11 +64,13 @@
             </div>
           </div>
 
+          <div class="alert alert-info" role="alert">Esta versión sólo entrega los primeros 500 resultados de la búsqueda. <a class="btn btn-info btn-xs" href="http://stackoverflow.com/questions/27500231/how-can-get-all-results-from-youtube-api-search-api-response">Aquí</a> la explicación.</div>
+
           <!-- Text input-->
           <div class="form-group">
             <label class="col-md-2 control-label" for="textinput">Registros</label>  
             <div class="col-md-4">
-              <input id="requested-records" type="number" class="form-control" value="200" step="50" min="50">
+              <input id="requested-records" type="number" class="form-control" value="500" step="50" min="50">
               <span class="help-block">Cantidad de registros a buscar. 
               <br/> (redondeará al siguiente múltiplo de 50) Un número muy alto podría tardar demasiado y colgar su navegador. Contemple realizar varias consultas cambiando el valor "Registro inicial" y luego combinar los resultados a mano.</span>  
             </div>
@@ -76,7 +78,7 @@
             <div class="col-md-4">
               <input id="requested-initial" type="number" class="form-control" value="1" step="50" min="1">
               <span class="help-block">Registro inicial de la búsqueda. 
-              <br/> El default será 1 (primer resultado de la búsqueda). Disponible para realizar varias búsquedas y luego combinar los csv por su cuenta.</span>  
+              <br/> El default será 1 (primer resultado de la búsqueda). Disponible para realizar varias búsquedas y luego combinar los csv por su cuenta. El máximo total siempre será 500 registros.</span>  
             </div>
           </div>
 
