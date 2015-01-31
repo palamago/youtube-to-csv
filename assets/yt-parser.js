@@ -52,7 +52,7 @@ var YT2CSV;
                 if(data && data.feed && data.feed.entry) {
                     YT2CSV.entries = YT2CSV.entries.concat(data.feed.entry);
                     console.log(YT2CSV.entries.length,requested);
-                    if(YT2CSV.entries.length >= requested){
+                    if(YT2CSV.entries.length >= requested || data.feed.entry.length < per_page){
                         YT2CSV.parse();
                     } else {
                         YT2CSV.call(requested,start+per_page,per_page);
