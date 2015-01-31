@@ -15,19 +15,45 @@ var YT2CSV;
     YT2CSV.init = function () {
     	$('#send').on('click',function(){
             _gaq.push(['_trackEvent', 'button', 'dale']);
+            
             $('#loader').show();
             $('.csv,.json').hide();
-            var query = YT2CSV.endpoint+'&'+$("#filters input[value!=''], #filters select:has(option[value!='']:selected)").serialize()+YT2CSV.extraParams;
 
-            $.getJSON(query,
-                function(data){
-	    			if(data && data.feed && data.feed.entry) {
-		    			YT2CSV.entries = data.feed.entry;
-		    			YT2CSV.parse();
-	    			}
-	    		});
+            YT2CSV.entries = [];
+            
+            var requested = $('#requested-records').val();
+            requested = (requested == "" || isNaN(requested))?100:parseInt(requested);
+            $('#requested-records').val(requested);
 
+            var initial = $('#requested-initial').val();
+            initial = (initial == "" || isNaN(initial))?1:parseInt(initial);
+            $('#requested-initial').val(initial);
+
+            YT2CSV.call(requested,initial);
+            $('#req-records').html(requested);
     	});
+    };
+
+    YT2CSV.call = function(requested,start,per_page){
+        start = (start)?start:1;
+        per_page = (per_page)?per_page:50;
+
+        var query = YT2CSV.endpoint+'&'+$("#filters input[value!=''], #filters select:has(option[value!='']:selected)").serialize()+YT2CSV.extraParams+'&max-results='+per_page+'&start-index='+start;
+
+        $('#current-record').html(YT2CSV.entries.length);
+
+        $.getJSON(query,
+            function(data){
+                if(data && data.feed && data.feed.entry) {
+                    YT2CSV.entries = YT2CSV.entries.concat(data.feed.entry);
+                    console.log(YT2CSV.entries.length,requested);
+                    if(YT2CSV.entries.length >= requested){
+                        YT2CSV.parse();
+                    } else {
+                        YT2CSV.call(requested,start+per_page,per_page);
+                    }
+                }
+            });
     };
 
 	YT2CSV.parse = function () {

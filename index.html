@@ -49,23 +49,34 @@
 
           <!-- Text input-->
           <div class="form-group">
-            <label class="col-md-4 control-label" for="textinput">Texto a buscar</label>  
+            <label class="col-md-2 control-label" for="textinput">Texto a buscar</label>  
             <div class="col-md-4">
-            <input id="q" name="q" type="text" placeholder="placeholder" class="form-control input-lg">
-            <span class="help-block">Será el texto que se buscará</span>  
+             <input id="q" name="q" type="text" placeholder="Búsqueda" class="form-control input-lg">
+             <span class="help-block">Será el texto que se buscará</span>  
             </div>
-          </div>
-
-
-          <!-- Select Basic -->
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="license">License</label>
+            <label class="col-md-2 control-label" for="license">License</label>
             <div class="col-md-4">
               <select id="license" name="license" class="form-control">
                 <option value="">No especificada</option>
                 <option value="cc">Creative Commons</option>
                 <option value="youtube">Standard de Youtube</option>
               </select>
+            </div>
+          </div>
+
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-2 control-label" for="textinput">Registros</label>  
+            <div class="col-md-4">
+              <input id="requested-records" type="number" class="form-control" value="200" step="50" min="50">
+              <span class="help-block">Cantidad de registros a buscar. 
+              <br/> (redondeará al siguiente múltiplo de 50) Un número muy alto podría tardar demasiado y colgar su navegador. Contemple realizar varias consultas cambiando el valor "Registro inicial" y luego combinar los resultados a mano.</span>  
+            </div>
+            <label class="col-md-2 control-label" for="textinput">Registro inicial</label>  
+            <div class="col-md-4">
+              <input id="requested-initial" type="number" class="form-control" value="1" step="50" min="1">
+              <span class="help-block">Registro inicial de la búsqueda. 
+              <br/> El default será 1 (primer resultado de la búsqueda). Disponible para realizar varias búsquedas y luego combinar los csv por su cuenta.</span>  
             </div>
           </div>
 
@@ -85,6 +96,7 @@
       <div class="col-md-12">
         <div id="loader">
           <h3 class="text-success text-center">Cargando y cocinando datos... Esperá un momento.</h3>
+          <h4 class="text-success text-center">Consultando <span id="current-record"></span> de <span id="req-records"></span> </h4>
         </div>
       </div>
     </div>
