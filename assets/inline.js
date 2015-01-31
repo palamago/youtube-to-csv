@@ -35,9 +35,9 @@
     // if succeeded, prettify and highlight it
     // highlight shows when textarea loses focus
     if (json) {
-      var pretty = JSON.stringify(json, undefined, 2);
-      $(".json code").html(pretty);
-      hljs.highlightBlock($(".json code").get(0));
+      //var pretty = JSON.stringify(json, undefined, 2);
+      //$(".json code").html(pretty);
+      //hljs.highlightBlock($(".json code").get(0));
     } else
       $(".json code").html("");
 
@@ -49,6 +49,12 @@
 
   // show rendered JSON
   function showJSON(rendered) {
+    //$('#loader').hide();
+    $('#loader').modal('hide');
+    $('.csv').show();
+    $('html, body').animate({
+        scrollTop: $("#resultado").offset().top
+    }, 1000);
     console.log("ordered to show JSON: " + rendered);
     if (rendered) {
       if ($(".json code").html()) {

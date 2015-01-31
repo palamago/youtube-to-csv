@@ -21,8 +21,7 @@ var YT2CSV;
 
             _gaq.push(['_trackEvent', 'button', 'dale']);
 
-            
-            $('#loader').show();
+            $('#loader').modal({backdrop:false,keyboard:false});
             $('.csv,.json').hide();
 
             YT2CSV.entries = [];
@@ -48,8 +47,6 @@ var YT2CSV;
 
         $('#current-record').html(YT2CSV.entries.length);
 
-        console.log(query);
-
         $.getJSON(query,
             function(data){
                 if(data && data.feed && data.feed.entry) {
@@ -74,5 +71,6 @@ var YT2CSV;
 })(window, document,jQuery);
 
 window.onload = function() {
+    //$('#loader').modal();
     YT2CSV.init(); 
 }

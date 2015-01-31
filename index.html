@@ -94,17 +94,20 @@
         </div>
     </div>
 
-   <div class="row">
-      <div class="col-md-12">
-        <div id="loader">
-          <h3 class="text-success text-center">Cargando y cocinando datos... Esperá un momento.</h3>
-          <h4 class="text-success text-center">Consultando <span id="current-record"></span> de <span id="req-records"></span> </h4>
+    <!-- Modal Loader-->
+    <div class="modal fade" id="loader" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="myModalLabel">Cargando...</h4>
+          </div>
+          <div class="modal-body">
+              <h3 class="text-success text-center">Cargando y cocinando datos... Esperá un momento.</h3>
+              <h4 class="text-success text-center">Consultando <span id="current-record"></span> de <span id="req-records"></span> </h4>
+          </div>
         </div>
       </div>
     </div>
-
-   <div class="row">
-      <div class="col-md-12">
 
         <section class="json">
 
@@ -133,10 +136,6 @@
             Extremely large files may cause trouble &mdash; the conversion is done inside your browser.
           </div>
         </section>
-      
-      </div>
-    </div>
-
 
    <div class="row">
       <div class="col-md-12">
@@ -145,7 +144,7 @@
 
           <p>
             <span class="rendered">
-              <h2>3. Aquí está el resultado final.</h2>
+              <h2 id="resultado">2. Aquí está el resultado final.</h2>
               Se muestran los primeros registros generados de los <span class="rows count"></span> totales.
 
               <a download="result.csv" href="#" class="download btn btn-success">
@@ -194,6 +193,7 @@
 </footer>
 
 <script type='text/javascript' src='assets/jquery-2.1.1.min.js'></script>
+<script type='text/javascript' src='assets/bootstrap.min.js'></script>
 <script src="assets/jquery.csv.js"></script>
 <script src="assets/site.js"></script>
 <script src="assets/highlight.pack.js"></script>
