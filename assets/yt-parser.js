@@ -8,9 +8,13 @@ var YT2CSV;
 
     YT2CSV.entries = [];
 
-    YT2CSV.endpoint = "http://gdata.youtube.com/feeds/api/videos?alt=json-in-script";
+    YT2CSV.key = 'AIzaSyDiQiIcGfOe5EZCkwCA8npAHtvQxRe78-A';
 
-    YT2CSV.extraParams = '&strict=false&v=2&fields=@gd:fields,entry(@gd:fields,published,updated, category(@label), title, content, link(@href),author, gd:comments/gd:feedLink(@countHint), media:group/media:content(@duration), media:group/media:thumbnail, gd:rating(@min), gd:rating(@max), gd:rating(@average), gd:rating(@numRaters), yt:statistics(@favoriteCount), yt:statistics(@viewCount))&callback=?';
+    YT2CSV.endpointList = "https://www.googleapis.com/youtube/v3/search?part=id,snippet";
+    YT2CSV.endpointDetails = "https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics";
+
+    YT2CSV.extraParamsList = '&key='+YT2CSV.key+'&type=video&maxResults=50&callback=?';
+    YT2CSV.extraParamsDetails = '&key='+YT2CSV.key+'&callback=?';
 
     YT2CSV.init = function () {
     	$('#send').on('click',function(){
@@ -34,35 +38,74 @@ var YT2CSV;
             initial = (initial == "" || isNaN(initial))?1:parseInt(initial);
             $('#requested-initial').val(initial);
 
-            YT2CSV.call(requested,initial);
-            $('#req-records').html(requested);
+            YT2CSV.callList(requested,'');
+            $('.req-records').html(requested);
     	});
     };
 
-    YT2CSV.call = function(requested,start,per_page){
-        start = (start)?start:1;
-        per_page = (per_page)?per_page:50;
+    YT2CSV.callList = function(requested,pageToken){
 
-        var query = YT2CSV.endpoint+'&'+$("#filters input[value!=''], #filters select:has(option[value!='']:selected)").serialize()+'&max-results='+per_page+'&start-index='+start+YT2CSV.extraParams;
-
-        $('#current-record').html(YT2CSV.entries.length);
+        var query = YT2CSV.endpointList+'&pageToken='+pageToken+'&q='+$("#q").val()+YT2CSV.extraParamsList;
 
         $.getJSON(query,
             function(data){
-                if(data && data.feed && data.feed.entry) {
-                    YT2CSV.entries = YT2CSV.entries.concat(data.feed.entry);
-                    console.log(YT2CSV.entries.length,requested);
-                    if(YT2CSV.entries.length >= requested || data.feed.entry.length < per_page){
-                        YT2CSV.parse();
+                //console.log(data);
+                if(data && data.items && data.items.length) {
+                    //console.log(data.items[0]);
+                    $('#thumb').attr('src',data.items[0].snippet.thumbnails.default.url);
+                    YT2CSV.entries = YT2CSV.entries.concat(data.items);
+                    $('#current-record').html(YT2CSV.entries.length);
+                    //console.log(YT2CSV.entries.length,requested);
+                    if(YT2CSV.entries.length >= requested || data.items.length < 50){
+                        YT2CSV.callDetails(requested);
                     } else {
-                        YT2CSV.call(requested,start+per_page,per_page);
+                        YT2CSV.callList(requested,data.nextPageToken);
                     }
                 }
             }).error(function(error) { console.log(error); YT2CSV.parse(); });
     };
 
+    YT2CSV.callDetails = function (requested) {
+        var chunks = _.chunk(YT2CSV.entries, 50);
+        YT2CSV.entries = []
+        _.forEach(chunks,function(c){
+            var ids = _.reduce(c, function(list, obj) {
+                  list.push(obj.id.videoId);
+                  return list;
+                }, []);
+            var query = YT2CSV.endpointDetails+'&id='+ids.join(',')+YT2CSV.extraParamsList;
+            $.getJSON(query,
+                function(data){
+                    YT2CSV.entries = YT2CSV.entries.concat(data.items);
+                    $('#current-record-details').html(YT2CSV.entries.length);
+                    if(YT2CSV.entries.length >= requested || data.items.length < 50){
+                        YT2CSV.parse();
+                        $('#thumb').attr('src','http://www.acupuncture-atlanta.com/images/acupuncture-atlanta-youtube-icon2.png');
+                    }
+                });
+
+        });
+    };
+
 	YT2CSV.parse = function () {
-        var wrap = {'entries':YT2CSV.entries};
+        var wrap = {'entries':_.map(YT2CSV.entries,function(item){
+            return {
+                id: item.id,
+                date: item.snippet.publishedAt,
+                title: item.snippet.title,
+                description: item.snippet.description,
+                duration: item.contentDetails.duration,
+                dimension: item.contentDetails.dimension,
+                definition: item.contentDetails.definition,
+                caption: item.contentDetails.caption,
+                channel: item.snippet.channelTitle,
+                viewCount: item.statistics.viewCount,
+                likeCount: item.statistics.likeCount,
+                dislikeCount: item.statistics.dislikeCount,
+                favoriteCount: item.statistics.favoriteCount,
+                commentCount: item.statistics.commentCount
+            }
+        })};
         $('.json .editing').val(JSON.stringify(wrap));
         $('.json .editing').trigger('paste');
 	};

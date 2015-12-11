@@ -39,7 +39,7 @@
 
     <div class="row">
         <div class="col-md-12">
-          <div class="alert alert-danger" role="alert">Note: The YouTube Data API (v2) has been officially deprecated as of March 4, 2014. Same thing about this tool. :(</div>
+          <div class="alert alert-info" role="alert">Usando API v3 :)</div>
           <h2>1. Completá los filtros y luego [Dale!]</h2>
           <form id="filters" class="form-horizontal">
           <fieldset>
@@ -54,33 +54,44 @@
              <input id="q" name="q" type="text" placeholder="Búsqueda" class="form-control input-lg">
              <span class="help-block">Será el texto que se buscará</span>  
             </div>
-            <label class="col-md-2 control-label" for="license">License</label>
-            <div class="col-md-4">
-              <select id="license" name="license" class="form-control">
-                <option value="">No especificada</option>
-                <option value="cc">Creative Commons</option>
-                <option value="youtube">Standard de Youtube</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="alert alert-info" role="alert">Esta versión sólo entrega los primeros 500 resultados de la búsqueda. <a class="btn btn-info btn-xs" href="http://stackoverflow.com/questions/27500231/how-can-get-all-results-from-youtube-api-search-api-response">Aquí</a> la explicación.</div>
-
-          <!-- Text input-->
-          <div class="form-group">
             <label class="col-md-2 control-label" for="textinput">Registros</label>  
             <div class="col-md-4">
               <input id="requested-records" type="number" class="form-control" value="500" step="50" min="50">
               <span class="help-block">Cantidad de registros a buscar. 
-              <br/> (redondeará al siguiente múltiplo de 50) Un número muy alto podría tardar demasiado y colgar su navegador. Contemple realizar varias consultas cambiando el valor "Registro inicial" y luego combinar los resultados a mano.</span>  
-            </div>
-            <label class="col-md-2 control-label" for="textinput">Registro inicial</label>  
-            <div class="col-md-4">
-              <input id="requested-initial" type="number" class="form-control" value="1" step="50" min="1">
-              <span class="help-block">Registro inicial de la búsqueda. 
-              <br/> El default será 1 (primer resultado de la búsqueda). Disponible para realizar varias búsquedas y luego combinar los csv por su cuenta. El máximo total siempre será 500 registros.</span>  
+              <br/> (redondeará al siguiente múltiplo de 50) el máximo es de 500 por consulta.</span>  
             </div>
           </div>
+
+          <!--div class="form-group">
+            <label class="col-md-2 control-label" for="videoLicense">License</label>
+            <div class="col-md-4">
+              <select id="videoLicense" name="videoLicense" class="form-control">
+                <option value="any">Cualquiera</option>
+                <option value="creativeCommon">Creative Commons</option>
+                <option value="youtube">Standard de Youtube</option>
+              </select>
+            </div>
+            <label class="col-md-2 control-label" for="videoCaption">Subtítulos</label>
+            <div class="col-md-4">
+              <select id="videoCaption" name="videoCaption" class="form-control">
+                <option value="any">Todos</option>
+                <option value="closedCaption">Con subtítulos</option>
+                <option value="none">Sin subtítulos</option>
+              </select>
+            </div>
+          </div-->
+
+          <!-- Text input
+          <div class="form-group">
+            <label class="col-md-2 control-label" for="videoDimension">Dimensión</label>
+            <div class="col-md-4">
+              <select id="videoDimension" name="videoDimension" class="form-control">
+                <option value="any">Todas</option>
+                <option value="2d">2D</option>
+                <option value="3d">3D</option>
+              </select>
+            </div>
+          </div>-->
 
           <div class="form-group">
             <label class="col-md-4 control-label" for="singlebutton"></label>
@@ -102,8 +113,10 @@
             <h4 class="modal-title" id="myModalLabel">Cargando...</h4>
           </div>
           <div class="modal-body">
-              <h3 class="text-success text-center">Cargando y cocinando datos... Esperá un momento.</h3>
-              <h4 class="text-success text-center">Consultando <span id="current-record"></span> de <span id="req-records"></span> </h4>
+              <h3 class="text-success text-center">Cargando y cocinando datos... Mientras esperás, mirate unos thumbnails:</h3>
+              <p class="text-center"><img id="thumb" src="http://www.acupuncture-atlanta.com/images/acupuncture-atlanta-youtube-icon2.png"/></p>
+              <h4 class="text-success text-center">Consultando <span id="current-record">0</span> de <span class="req-records"></span> </h4>
+              <h4 class="text-success text-center">Buscando detalles <span id="current-record-details">0</span> de <span class="req-records"></span> </h4>
           </div>
         </div>
       </div>
@@ -192,6 +205,7 @@
   </div>
 </footer>
 
+<script type='text/javascript' src='assets/lodash.js'></script>
 <script type='text/javascript' src='assets/jquery-2.1.1.min.js'></script>
 <script type='text/javascript' src='assets/bootstrap.min.js'></script>
 <script src="assets/jquery.csv.js"></script>

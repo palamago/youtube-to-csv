@@ -95,3 +95,7 @@ footer p {
 
 /* harmonize bootstrap and highlightjs background colors */
 .hljs {background-color: #f5f5f5 !important;}
+
+img{
+  max-width: 200px;
+}
